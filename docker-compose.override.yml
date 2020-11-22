@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  adminer:
+    image: adminer
+    restart: always
+    networks:
+      - backend
+    ports:
+      - 8080:8080

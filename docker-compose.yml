@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+
+#  app_backend:
+#   image:
+#   networks:
+#     - frontend
+#     - backend
+#   depends_on:
+#     - db
+#     - mqtt
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: main_database
+      MYSQL_USER: aplication
+      MYSQL_PASSWORD: passApp
+    networks:
+      - backend
+    volumes:
+      - "./data_db:/var/lib/mysql"
+    ports:
+      - "33060:3306"
+      
+  mqtt:
+    image: emqx/emqx
+    restart: always
+    ports:
+      - "18083:18083"   # Puerto para Dashboard
+      - "1883:1883"
+      - "8083:8083"
+      - "8883:8883"
+      - "8084:8084"
+
+
+# app_frontend:
+#   image:
+#   networks:
+#     - frontend
+#   ports:
+#     - "80:8080"
+
+networks:
+  frontend:
+  backend:
