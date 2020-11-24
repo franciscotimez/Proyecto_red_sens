@@ -38,7 +38,7 @@ services:
       - "8883:8883"
       - "8084:8084"
 
-  app_frontend:
+  grafana:
     build:
       context: .
       args:
@@ -48,6 +48,11 @@ services:
       dockerfile: dockerfile.grafana
     networks:
       - backend
+    userns_mode: "host"
+    volumes:
+    # sudo mkdir -p ./data_grafana
+    # sudo chown 472:472 ./data_grafana
+      - "./data_grafana:/var/lib/grafana"
     ports:
       - "3000:3000"
 
