@@ -12,9 +12,11 @@ services:
 #     - mqtt
 
   db:
-    image: mariadb
+    image: linuxserver/mariadb
     restart: always
     environment:
+      PUID: 1000
+      PGID: 1000
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: main_database
       MYSQL_USER: aplication
@@ -22,7 +24,7 @@ services:
     networks:
       - backend
     volumes:
-      - "./data_db:/var/lib/mysql"
+      - "./data_db2:/config"
     ports:
       - "33060:3306"
 
@@ -43,7 +45,7 @@ services:
       context: .
       args:
         - "GRAFANA_VERSION=latest"
-        - "GF_INSTALL_IMAGE_RENDERER_PLUGIN=true"
+#        - "GF_INSTALL_IMAGE_RENDERER_PLUGIN=true"
         - "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource"
       dockerfile: dockerfile.grafana
     networks:
